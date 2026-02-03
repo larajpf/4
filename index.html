@@ -158,6 +158,12 @@
     }
     .feedback-overlay.show { opacity: 1; }
 
+    /* ✅ Password in green */
+    .pw-green {
+      color: #16a34a;
+      font-weight: 900;
+    }
+
     .ad-overlay {
       position: fixed;
       inset: 0;
@@ -851,11 +857,14 @@
       const correctN = results.filter((r) => r.correct).length;
       const accuracy = total ? Math.round((correctN / total) * 100) : 0;
 
-      showFeedback(
-        `Thanks for playing!\nAccuracy: ${accuracy}%\nPassword: Game\nPlease return to the survey now`,
-        "neutral",
-        true
-      );
+      // ✅ Use HTML so only "Password: Game" can be green
+      feedbackEl.innerHTML =
+        `Thanks for playing!<br>` +
+        `Accuracy: ${accuracy}%<br>` +
+        `<span class="pw-green">Password: Game</span><br>` +
+        `Please return to the survey now`;
+
+      feedbackEl.className = "feedback-overlay neutral small show";
 
       postGameControls.classList.remove("hidden");
       answerControls.classList.add("hidden");
